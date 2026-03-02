@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  background-color: #323437; /* Monkeytype dark */
+  font-family: monospace;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.typing-box {
+  width: 70%;
+  max-width: 900px;
+}
+
+textarea {
+  width: 100%;
+  height: 250px;
+  background-color: #2c2e31;
+  color: #d1d0c5;
+  border: none;
+  border-radius: 8px;
+  padding: 20px;
+  font-size: 24px;
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+}
