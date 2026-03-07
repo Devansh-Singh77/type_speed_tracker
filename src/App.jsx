@@ -9,6 +9,8 @@ function App() {
   const [time, setTime] = useState(30);
   const [isTyping, setIsTyping] = useState(false);
   const [wpm, setWpm] = useState(0);
+  const [accuracy, setAccuracy] = useState(100);
+  const [testFinished, setTestFinished] = useState(false);
 
   useEffect(() => {
     let timer;
@@ -17,6 +19,11 @@ function App() {
       timer = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
       }, 1000);
+    }
+
+    if (time === 0) {
+      setIsTyping(false);
+      setTestFinished(true);
     }
 
     return () => clearInterval(timer);
@@ -33,11 +40,16 @@ function App() {
     }
 
     calculateWPM(value);
+    calculateAccuracy(value);
   };
 
   const calculateWPM = (inputText) => {
 
-    const words = inputText.trim().split(" ").filter((word) => word !== "").length;
+    const words = inputText
+      .trim()
+      .split(" ")
+      .filter((word) => word !== "").length;
+
     const timeSpent = 30 - time;
 
     if (timeSpent > 0) {
@@ -46,6 +58,48 @@ function App() {
     }
   };
 
+  const calculateAccuracy = (inputText) => {
+
+    let correctChars = 0;
+
+    for (let i = 0; i < inputText.length; i++) {
+      if (inputText[i] === sampleText[i]) {
+        correctChars++;
+      }
+    }
+
+    const accuracyValue =
+      inputText.length === 0
+        ? 100
+        : Math.round((correctChars / inputText.length) * 100);
+
+    setAccuracy(accuracyValue);
+  };
+
+  const restartTest = () => {
+    setText("");
+    setTime(30);
+    setIsTyping(false);
+    setWpm(0);
+    setAccuracy(100);
+    setTestFinished(false);
+  };
+
+  if (testFinished) {
+    return (
+      <div className="container">
+        <h1>Test Finished</h1>
+
+        <h2>WPM: {wpm}</h2>
+        <h2>Accuracy: {accuracy}%</h2>
+
+        <button onClick={restartTest} className="restart-btn">
+          Restart Test
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
 
@@ -53,6 +107,7 @@ function App() {
 
       <h2>Time: {time}s</h2>
       <h2>WPM: {wpm}</h2>
+      <h2>Accuracy: {accuracy}%</h2>
 
       <p className="sample-text">
 
@@ -80,6 +135,10 @@ function App() {
         onChange={handleTyping}
         disabled={time === 0}
       />
+
+      <button onClick={restartTest} className="restart-btn">
+        Restart Test
+      </button>
 
     </div>
   );
