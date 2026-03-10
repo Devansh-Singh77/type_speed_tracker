@@ -166,7 +166,7 @@ function getWordList(difficulty = "common") {
     );
   }
 
-  return [...new Set(list)]; // remove duplicates and return a new copy
+  return [...new Set(list)]; 
 }
 
 function _buildWordArray(pool, count) {
@@ -177,21 +177,21 @@ function _buildWordArray(pool, count) {
 
   while (result.length < count) {
 
-    // If we've used all words, reshuffle and start again
+    
     if (available.length === 0) {
       available  = shuffle(pool);
       retryCount = 0;
     }
 
-    const word = available.shift(); // take the next word from the list
-    const last = result[result.length - 1]; // what was the last word we added?
+    const word = available.shift(); 
+    const last = result[result.length - 1]; 
 
-    // If this word is the same as the last one, skip it for now
+   
     if (word === last) {
-      available.push(word); // put it back at the end
+      available.push(word); 
       retryCount++;
 
-      // Edge case: if the pool only has 1 word, just allow the repeat
+      
       if (retryCount > maxRetries) {
         result.push(word);
         retryCount = 0;
@@ -218,7 +218,7 @@ function generateWords(count = 30, difficulty = "common")
 
 function generateFromCustomList(list, count = 30) {
 
-  // Check the list is actually an array with something in it
+  
   if (!Array.isArray(list) || list.length === 0) {
     throw new Error("TypeShift: Please pass a non-empty array of words.");
   }
@@ -227,7 +227,7 @@ function generateFromCustomList(list, count = 30) {
     throw new Error(⁠ TypeShift: count should be a positive number, but got: ${count} ⁠);
   }
 
-  // Clean up the list —  duplicates ko hatane ,  spaces kam karwa do, remove empty strings
+ 
   const pool = [...new Set(list.map((w) => String(w).trim()).filter(Boolean))];
 
   if (pool.length === 0) {
@@ -237,7 +237,7 @@ function generateFromCustomList(list, count = 30) {
   return _buildWordArray(pool, count);
 }
 export { generateWords, generateFromCustomList, getWordList, shuffle };
-// This part makes the code work even without React.
+
 //jadu dikhe ga maja aa jaye ga 
 if (typeof window !== "undefined") {
   window.TypeShift = {
