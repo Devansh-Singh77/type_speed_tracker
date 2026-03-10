@@ -5,7 +5,7 @@ import { generateWords} from
 
 function App() {
 
- const [sampleText, setSampleText] = useState(() => generateWords (30) join(" ")) ;
+ const [sampleText, setSampleText] = useState(() => generateWords(30).join(" "));
 
   const [text, setText] = useState("");
   const [time, setTime] = useState(30);
