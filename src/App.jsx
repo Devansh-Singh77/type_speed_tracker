@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { generateWords} from
+"./wordGenerator.js";
 
 function App() {
 
-  const sampleText = "The quick brown fox jumps over the lazy dog";
+ const [sampleText, setSampleText] = useState(() => generateWords (30) join(" ")) ;
 
   const [text, setText] = useState("");
   const [time, setTime] = useState(30);
@@ -83,6 +85,7 @@ function App() {
     setWpm(0);
     setAccuracy(100);
     setTestFinished(false);
+    setSampleText(generateWords(30).join(" "));
   };
 
   if (testFinished) {
